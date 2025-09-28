@@ -49,4 +49,32 @@ const solution = () => {
   return result;
 };
 
-console.log(solution());
+const solution2 = () => {
+  let result = 0;
+  const n = heights.length;
+  let leftMax = heights[0];
+  let rightMax = heights[n - 1];
+
+  let left = 1;
+  let right = n - 2;
+  while (left <= right) {
+    if (leftMax < rightMax) {
+      const leftHeight = heights[left];
+      if (leftMax > leftHeight) {
+        result += leftMax - leftHeight;
+      }
+      leftMax = Math.max(leftMax, leftHeight);
+      left++;
+    } else {
+      const rightHeight = heights[right];
+      if (rightMax > rightHeight) {
+        result += rightMax - rightHeight;
+      }
+      rightMax = Math.max(rightMax, rightHeight);
+      right--;
+    }
+  }
+  return result;
+};
+
+console.log(solution2());
