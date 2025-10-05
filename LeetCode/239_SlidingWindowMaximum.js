@@ -1,4 +1,6 @@
-const nums = [1, 3, -1, -3, 5, 3, 6, 7],
+// const nums = [1, 3, -1, -3, 5, 3, 6, 7],
+//   k = 3;
+const nums = [1, 3, 1, 2, 0, 5],
   k = 3;
 // const nums = [1, -1],
 //   k = 1;
@@ -25,4 +27,35 @@ const solution = () => {
   return result;
 };
 
-console.log(solution());
+const solution2 = () => {
+  
+  let stack = [];
+  const result = [];
+  for (let right = 0; right < nums.length; right++) {
+    const left = right - k + 1;
+    const rightNum = nums[right];
+    let lastStackEle = stack[stack.length - 1];
+    while (
+      stack.length > 0 &&
+      (lastStackEle[1] < left || lastStackEle[0] <= rightNum)
+    ) {
+      stack.pop();
+    }
+    let isReplaced = false;
+    for (let i = stack.length - 1; i >= 0; i--) {
+      const curStackNum = stack[i];
+      if (rightNum >= curStackNum[0]) {
+        isReplaced = true;
+        stack[i] = [rightNum, right];
+        break;
+      }
+    }
+    !isReplaced && stack.unshift([rightNum, right]);
+    if (left >= 0) {
+      result.push(stack[stack.length - 1][0]);
+    }
+  }
+  return result;
+};
+
+console.log(solution2());
