@@ -24,3 +24,26 @@ const solution = (head, k) => {
   prevNode.next = head;
   return dummyNode.next;
 };
+
+const reverseKGroup = (head, k) => {
+  let ite = head;
+  let count = 0;
+  while (ite && count < k) {
+    ite = ite.next;
+    count++;
+  }
+
+  if (count === k) {
+    let nextNode = reverseKGroup(ite, k);
+    while (count > 0) {
+      let tempNode = head.next;
+      head.next = nextNode;
+      nextNode = head;
+      head = tempNode;
+      count--;
+    }
+    return nextNode;
+  }
+
+  return head;
+};
